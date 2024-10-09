@@ -10,14 +10,16 @@
             var url = prompt("Enter the URL to flood:");
             num = parseInt(num, 10);
             if (!isNaN(num) && num > 0 && url) {
-                // Ensure the URL is absolute
-                if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                    url = window.location.origin + url;
+                try {
+                    // Ensure the URL is absolute
+                    var absoluteUrl = new URL(url, window.location.origin);
+                    for (var i = 1; i <= num; i++) {
+                        history.pushState(0, 0, i == num ? absoluteUrl.href : absoluteUrl.href + "?flood=" + i);
+                    }
+                    alert("History flood successful! " + absoluteUrl.href + " now appears in your history " + num + (num == 1 ? " time." : " times."));
+                } catch (e) {
+                    alert("Invalid URL. Please enter a valid URL.");
                 }
-                for (var i = 1; i <= num; i++) {
-                    history.pushState(0, 0, i == num ? url : url + "?flood=" + i);
-                }
-                alert("History flood successful! " + url + " now appears in your history " + num + (num == 1 ? " time." : " times."));
             } else {
                 alert("Please enter a valid number and URL.");
             }
@@ -28,4 +30,3 @@
     <button onclick="historyFlood()">Flood History</button>
 </body>
 </html>
-
