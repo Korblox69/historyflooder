@@ -10,6 +10,10 @@
             var url = prompt("Enter the URL to flood:");
             num = parseInt(num, 10);
             if (!isNaN(num) && num > 0 && url) {
+                // Ensure the URL is absolute
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = window.location.origin + url;
+                }
                 for (var i = 1; i <= num; i++) {
                     history.pushState(0, 0, i == num ? url : url + "?flood=" + i);
                 }
@@ -24,3 +28,4 @@
     <button onclick="historyFlood()">Flood History</button>
 </body>
 </html>
+
