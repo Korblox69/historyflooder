@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Flood</title>
+    <script>
+        function historyFlood() {
+            var num = prompt("History flood amount:");
+            var url = prompt("Enter the URL to flood:");
+            num = parseInt(num, 10);
+            if (!isNaN(num) && num > 0 && url) {
+                for (var i = 1; i <= num; i++) {
+                    history.pushState(0, 0, i == num ? url : url + "?flood=" + i);
+                }
+                alert("History flood successful! " + url + " now appears in your history " + num + (num == 1 ? " time." : " times."));
+            } else {
+                alert("Please enter a valid number and URL.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="historyFlood()">Flood History</button>
+</body>
+</html>
